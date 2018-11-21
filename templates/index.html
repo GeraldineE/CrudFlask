@@ -1,42 +1,83 @@
+{% extends 'layout.html' %}
 
-{% with messages= get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-    <p> {{message}}</p>
-{% endfor %}
-{% endif %}
-{% endwith%}
-<form action="/add" method="POST">
+{% block body %}
+<div class =  "row">  
+    <div class="col-md-5">
+            {% with messages= get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                <p> {{message}}</p>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{message}} 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith%}
 
-    <input type="text" name="nombre" placeholder="nombre">
-    <input type="text" name="apellido" placeholder="apellido">
-    <input type="text" name="telefono" placeholder="telefono">
-    <input type="text" name="email" placeholder="email">
-    <input type="submit">
 
-</form>
-<table>
-    <thead>
-        <tr>
-            <td>NOMBRE</td>
-            <td>APELLIDO</td>
-            <td>TELEFONO</td>
-            <td>EMAIL</td>
-            <td>OPERACIONES</td>
-        </tr>
-    </thead>
-    <tbody>
-        {% for contact in Details %}
-        <tr>
-            <td> {{contact.1}}</td>
-            <td> {{contact.2}}</td>
-            <td> {{contact.3}}</td>
-            <td> {{contact.4}}</td>
-            <td>
-                <a href="/edit/{{contact.0}}">Editar</a>
-                <a href="/delete/{{contact.0}}">Eliminar</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+    <div class="card card-body">
+     <form action="/add" method="POST">
+        <div class="form-group">
+          <input type="text" name="nombre" placeholder="nombre" class="form-control">
+       </div>
+
+       <div class="form-group">
+            <input type="text" name="apellido" placeholder="apellido" class="form-control">
+       </div>
+
+       <div class="form-group">
+           <input type="text" name="telefono" placeholder="telefono" class="form-control">
+        </div>
+
+        <div class="form-group">
+           <input type="text" name="email" placeholder="email" class="form-control">
+       </div>
+       <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+                Guardar
+            </button>
+       </div>
+       
+            
+            </form>
+
+</div>
+
+<div class =  "row">  
+        <div class="col-md-7">
+                <table class="table table-striped table-bordered bg-white table-sm">
+                        <thead>
+                            <tr>
+                                <td>NOMBRE</td>
+                                <td>APELLIDO</td>
+                                <td>TELEFONO</td>
+                                <td>EMAIL</td>
+                                <td>OPERACIONES</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in Details %}
+                            <tr>
+                                <td> {{contact.1}}</td>
+                                <td> {{contact.2}}</td>
+                                <td> {{contact.3}}</td>
+                                <td> {{contact.4}}</td>
+                                <td>
+                                    <a href="/edit/{{contact.0}}" class="btn btn-secondary">Editar</a>
+                                    <a href="/delete/{{contact.0}}" class="btn btn-danger btn-delete">Eliminar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+    
+    </div>
+
+
+
+
+{% endblock %}
